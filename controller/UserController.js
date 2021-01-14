@@ -1,30 +1,24 @@
 const User = require('../model/User');
 
-exports.index=(req,res,next)=>{
-    User.find().then(res=>{
-        res.json({
-            res
-        })
-    }).catch(err=>{
-        res.json({
-            message:'an err occured!',
-        })
-    })
+exports.index= async (req,res,next)=>{
+    try{ 
+    let user = await User.find();
+    if(user) res.json({res});
+}catch(err){
+    res.json({err:err});
 }
-exports.show=(req,res,next)=>{
+}
+exports.show= async(req,res,next)=>{
+    try{
     let UserId= req.body.UserId;
-    User.findById(UserId)
-    .then(res=>{
-        res.json({
-            res
-        });
-    }).catch(err=>{
-        res.json({
-            message:'no find id in database'
-        })
-    })
+    let userfind= await User.findById(UserId)
+    }catch(err){
+        res.json({err: err});
+    }
+    
 }
-exports.update=(req,res,next)=>{
+exports.update= async (req,res,next)=>{
+try{
     let userId = req.body.userId;
 
     let udateData={
@@ -32,28 +26,19 @@ exports.update=(req,res,next)=>{
         password: req.body.password,
         phone: req.body.phone,
     }
-    User.findByIdAndUpadate(userId,{$set: udateData})
-    .then(()=>{
-        res.json({
-            message:"update successfully",
-        })
-    }).catch(err=>{
-        res.json({
-            message:"no update successfully",
-        })
-    })
+    let updateUser =await User.findByIdAndUpadate(userId,{$set: udateData})
+     if(updateUser) res.json({message: "update successfully"});
+}catch(err){
+       res.json({err: err});
+    }
 }
-exports.destroy=(req,res,next)=>{
+exports.destroy= async (req,res,next)=>{
+try{
     let userId= req.body.userId;
-    User.findByIdAndRemove(userId)
-    .then(()=>{
-        req.json({
-            message:'Deleted successfully'
-        })
-    })
-    .catch(err=>{
-        req.json({
-            message:'no delete successfully',
-        })
-    })
+    let removeUser= await User.findByIdAndRemove(userId);
+    if(removeUser){ res.json({message: "remove successfully"})};
+
+}catch(err){
+    res.json({err: err})
+}
 }
