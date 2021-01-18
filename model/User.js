@@ -5,20 +5,24 @@ var UserInSchema = new Schema({
   username :{
       type:String,
       required:true,
+      minlength:4,
+      maxlength:8,
      
   },
   email:{
      type:String,
-      required: true,
+     required: true,
+    
   },
   password:{
       type:String,
-      required:/^[a-z0-9_]{3,10}$/,
-      
+      required:true,
+
   },
   phone:{
       type:String,
-      required: true,
+      required:true,
+      
   }
 },{timestamps:true});
 var User = mongoose.model("User",UserInSchema);
