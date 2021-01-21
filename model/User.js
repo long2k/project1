@@ -23,7 +23,7 @@ var UserInSchema = new Schema({
       type:String,
       required:true,
       
-  }
+  },
 },{timestamps:true});
 var User = mongoose.model("User",UserInSchema);
 module.exports=User;

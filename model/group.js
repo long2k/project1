@@ -5,7 +5,7 @@ var groupSchema=  new Schema({
     namegroup: String,
     listmb:[{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:'User',
     }],
     id_leader:{
         type:String,

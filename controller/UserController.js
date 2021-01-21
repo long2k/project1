@@ -1,7 +1,7 @@
 const User = require('../model/User');
 
 exports.index=async (req,res,next)=>{
-    try{
+    try {
     var all= await User.find();
     res.status(200).send(all);
     }catch(err)
@@ -12,7 +12,7 @@ exports.index=async (req,res,next)=>{
 
 
 exports.show= async (req,res,next)=>{
-    try{
+    try {
     let UId= req.body.UserId;
     var fUser = await User.findById(UId);
     res.status(200).json({fUser});
@@ -23,7 +23,7 @@ exports.show= async (req,res,next)=>{
 
 
 exports.update=async (req,res,next)=>{
-    try{
+    try {
     let userId = req.body.userId;
     let udateData={
         email: req.body.email,
@@ -38,7 +38,7 @@ exports.update=async (req,res,next)=>{
 }
 } 
 exports.destroy= async (req,res,next)=>{
-    try{
+    try {
     let userId= req.body.userId;
     var result=await User.findByIdAndDelete(userId);
     if(result){
