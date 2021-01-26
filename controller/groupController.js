@@ -1,7 +1,6 @@
 const group= require('../model/group');
 const User= require('../model/User');
 
-
 exports.addmember= async(req,res,next)=>{
     try {
         let {userId,id_group}= req.body;
@@ -9,13 +8,14 @@ exports.addmember= async(req,res,next)=>{
         var result = await group.findById(id_group);
         if(id == result.id_leader)
         {
-            if (result.listmb.indexOf(userId)) {
+            if (! result.listmb.indexOf(userId)) {
                 await group.findOneAndUpdate({_id : id_group}, {$push: {listmb:userId }});
                 res.status(200).send('add  completely!!');
             }  
-        }          
+        }
+                  
     } catch(error) {
-         res.status(404).json({error: error});
+        res.status(500).json({err: ' Server error '});
    }; 
 }
 
@@ -31,9 +31,11 @@ exports.deletember= async(req,res,next)=>{
                await group.findOneAndUpdate({ _id:id_group}, {$pull: {listmb : userId }});
                res.status(200).send('remove  completely!!');
              }
+        } else {
+            res.badRequest("khong tim thay ");
         }
     } catch (err) {
-        res.json(err);
+        res.status(500).json({err:'Server error'});
     }
 }
 
@@ -51,7 +53,7 @@ exports.infmember = async(req,res,next)=>{
         }
  
     } catch(err) {
-        res.status(404).json(err);
+        res.status(500).json({err: ' Server error '});
     }
 
 }
