@@ -24,6 +24,9 @@ var UserInSchema = new Schema({
       required:true,
       
   },
+  avatar:{
+      type:String,
+  }
 },{timestamps:true});
 var User = mongoose.model("User",UserInSchema);
 module.exports=User;

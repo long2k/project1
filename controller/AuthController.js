@@ -11,8 +11,10 @@ const register = async (req,res,next)=>{
                 password: hashPass,
                 phone: req.body.phone,
             });
-
-            var sv= await userIn.save();
+            if(req.file){
+                UserIn.avatar = req.file.path;
+            }
+            await userIn.save();
             res.status(200).send("register complete");
     }catch(err){
         res.status(404).send(err);
