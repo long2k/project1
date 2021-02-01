@@ -11,6 +11,7 @@ var bodyPaser= require("body-parser");
  const userRoute= require('./routes/admin');
  const authRoute= require('./routes/auth');
  const groupuse= require('./routes/grouproute');
+ const user=require('./routes/user');
  db.on("err",(err)=>{
    console.log(err);
  })
@@ -25,7 +26,7 @@ var bodyPaser= require("body-parser");
 
  
  app.use('/api/user',groupuse);
- app.use('/api/user',userRoute);
+ app.use('/api/user',user);
  app.use('/api',authRoute);
 
  const PORT = process.env.PORT||3000;

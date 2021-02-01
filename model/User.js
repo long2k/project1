@@ -26,6 +26,7 @@ var UserInSchema = new Schema({
   },
   avatar:{
       type:String,
+      
   }
 },{timestamps:true});
 var User = mongoose.model("User",UserInSchema);

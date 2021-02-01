@@ -12,7 +12,10 @@ const register = async (req,res,next)=>{
                 phone: req.body.phone,
             });
             if(req.file){
-                UserIn.avatar = req.file.path;
+                await  sharp(req.file.buffer)
+                            .resize(320,320)
+                            .toFile('./uploads' +req.file.originalname);
+                 userIn.avatar = req.file.path;
             }
             await userIn.save();
             res.status(200).send("register complete");

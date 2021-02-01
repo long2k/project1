@@ -1,4 +1,5 @@
 const User = require('../model/User');
+var fs = require('fs');
 
 exports.index=async (req,res,next)=>{
     try {
@@ -32,10 +33,9 @@ exports.update=async (req,res,next)=>{
     }
     var update = await User.findByIdAndUpadate(userId,{$set: udateData});
      res.status(200).send("update completely");
-}catch(err)
-{
-    res.status(404).send("err update");
-}
+    } catch(err) {
+        res.status(404).send("err update");
+    }
 } 
 exports.destroy= async (req,res,next)=>{
     try {
@@ -48,4 +48,21 @@ exports.destroy= async (req,res,next)=>{
   catch(err){
       res.status(404).json(err);
   }
+}
+exports.AvatarI =  async (req, res, next)=> {
+    
+    try {
+          let idname = req.body.idname;
+            usrplace= await User.findOne({_id: idname});
+            fs.unlinkSync(usrplace.avatar);
+        if(req.file) {
+            let ipath= req.file.path;
+            await User.findByIdAndUpdate({_id: idname},{$set: {avatar : ipath}} );
+            res.status(2000).json("replace avatar completely");
+            
+        }
+    } catch (error) {
+        res.status(500).json("err replace avatar");
+    }
+    
 }
